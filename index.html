@@ -1,0 +1,104 @@
+<title>Echoes of Aster</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap">
+<style>
+  /* Layout: one centered SNES screen (256x224, integer-scaled) with a slim hint line; touch pad appears on coarse pointers. */
+  :root {
+    --bg: #07060f;
+    --frame: #1c1a3a;
+    --ink: #d9d6f2;
+    --muted: #7d79a8;
+    --btn: #22204a;
+    --btn-edge: #3b3870;
+    --btn-ink: #e9e6ff;
+    --glow: rgba(90, 110, 255, 0.18);
+    --font-ui: "Silkscreen", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 12px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+  #screen {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background: var(--bg);
+    box-shadow: 0 0 0 2px var(--frame), 0 0 60px var(--glow);
+    outline: none;
+    max-width: 100%;
+  }
+  #screen:focus-visible { box-shadow: 0 0 0 2px var(--btn-ink), 0 0 60px var(--glow); }
+  .hint {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+  .hint b { color: var(--ink); font-weight: 400; }
+  #pad { display: none; width: 100%; max-width: 420px; justify-content: space-between; align-items: center; }
+  .dpad { display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(3, 52px); gap: 2px; }
+  .btns { display: flex; gap: 12px; align-items: center; }
+  #pad button {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: var(--btn-ink);
+    background: var(--btn);
+    border: 2px solid var(--btn-edge);
+    border-radius: 10px;
+    touch-action: none;
+    padding: 0;
+  }
+  #pad button:active, #pad button.on { background: var(--btn-edge); }
+  #pad .round { width: 60px; height: 60px; border-radius: 50%; }
+  #pad .small { width: 52px; height: 36px; font-size: 11px; }
+  @media (pointer: coarse) {
+    #pad { display: flex; }
+    .hint { display: none; }
+  }
+</style>
+
+<canvas id="screen" width="256" height="224" tabindex="0" aria-label="Echoes of Aster game screen"></canvas>
+<div class="hint">
+  <b>Arrows/WASD</b> move &nbsp;&middot;&nbsp; <b>Z/Enter</b> confirm &nbsp;&middot;&nbsp; <b>X/Esc</b> cancel, hold to dash &nbsp;&middot;&nbsp; <b>C</b> menu
+</div>
+<div id="pad" aria-label="Touch controls">
+  <div class="dpad">
+    <span></span><button data-act="up" aria-label="Up">&#9650;</button><span></span>
+    <button data-act="left" aria-label="Left">&#9664;</button><span></span><button data-act="right" aria-label="Right">&#9654;</button>
+    <span></span><button data-act="down" aria-label="Down">&#9660;</button><span></span>
+  </div>
+  <div class="btns">
+    <button class="small" data-act="menu">MENU</button>
+    <button class="round" data-act="cancel">B</button>
+    <button class="round" data-act="ok">A</button>
+  </div>
+</div>
+
+<script src="src/core.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/art.js"></script>
+<script src="src/world.js"></script>
+<script src="src/data.js"></script>
+<script src="src/field.js"></script>
+<script src="src/battle.js"></script>
+<script src="src/main.js"></script>
